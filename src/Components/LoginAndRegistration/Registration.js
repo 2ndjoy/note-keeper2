@@ -50,7 +50,7 @@ const Registration = () => {
 
   const saveUser = (email, name) => {
     const user = { email, name };
-    fetch("http://localhost:5000/users", {
+    fetch("https://note-niye-naw-server-2ndjoy.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
