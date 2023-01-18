@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../UserContext/AuthProvider/AuthProvider";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -19,9 +20,14 @@ const Header = () => {
         <div className="navbar-end">
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="" src={user?.photoURL} />
-              </div>
+              {user ? (
+                <div className="w-10 rounded-full">
+                  {" "}
+                  <img alt="" src={user?.photoURL} />{" "}
+                </div>
+              ) : (
+                <FaUserCircle></FaUserCircle>
+              )}
             </label>
             <ul
               tabIndex={0}

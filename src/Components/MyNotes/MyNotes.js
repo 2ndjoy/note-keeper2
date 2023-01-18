@@ -68,9 +68,14 @@ const MyNotes = ({ loading, setLoading }) => {
                             className="input input-bordered input-accent w-full max-w-xs my-3"
                             value={data?.note}
                           />
-                          <button className="btn btn-xs btn-success">
-                            Save
-                          </button>
+                          <div className="grid justify-center items-center gap-2 mt-5">
+                            <button className="btn btn-xs btn-success">
+                              Save
+                            </button>
+                            <button className="btn btn-xs btn-error">
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
