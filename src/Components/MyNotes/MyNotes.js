@@ -1,40 +1,50 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../UserContext/AuthProvider/AuthProvider";
 
-const MyNotes = ({ loading, setLoading }) => {
-  const [extdend, setExtend] = useState(false);
-  const [datas, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
+const MyNotes = () => {
+  const [datass, setData] = useState([]);
 
-  const { user } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(3);
+  // const perPage = 3;
 
   useEffect(() => {
     fetch(
-      `https://note-niye-naw-server-2ndjoy.vercel.app/mynotes?userEmail=${user?.email}`
+      `https://note-niye-naw-server-2ndjoy.vercel.app/mynotes?userEmail=${user?.email}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
         setData(data);
         setLoading(false);
       });
-  }, [loading, user]);
-  // console.log(datas);
+  }, [loading, user, page, size, setLoading]);
 
+  const { mynotes, count } = datass;
+  console.log(count);
+  const pages = Math.ceil(count / (size * 2));
+  console.log(pages);
   return (
     <div>
       {!user ? (
-        <p>Please Log in</p>
+        <p>
+          Please <Link to="/login">Log in</Link>
+        </p>
       ) : (
         <div>
-          <h1 className="text-center">My Notes</h1>
+          <h1 className="text-center text-xl font-bold">My Notes</h1>
           <div className="lg:grid lg:justify-center lg:grid-cols-3 lg:gap-3 grid justify-center ">
             {loading ? (
               <p>Loading..</p>
-            ) : datas.length === 0 ? (
+            ) : mynotes?.length === 0 ? (
               <p>No data available</p>
             ) : (
-              datas?.map((data) => (
-                <div className="justify-center border border-red-500 p-3 rounded my-3">
+              mynotes?.map((data) => (
+                <div
+                  key={data?._id}
+                  className="justify-center border border-2 border-red-800 p-3 rounded my-3"
+                >
                   <h1 className="text-xl font-bold">{data?.title}</h1>
                   <p>{data?.note}</p>
                   <label htmlFor="my-modal-3" className="btn btn-xs">
@@ -85,7 +95,36 @@ const MyNotes = ({ loading, setLoading }) => {
             )}
           </div>
         </div>
-      )}
+      )}{" "}
+      <br />
+      <div className="btn-group mt-8">
+        {/* <button className="btn">1</button>
+        <button className="btn btn-active">2</button>
+        <button className="btn">3</button>
+        <button className="btn">4</button> */}
+        {user && pages ? (
+          [...Array(pages).keys()].map((number) => (
+            <button
+              key={number}
+              onClick={() => setPage(number)}
+              className={`btn + ${page === number && `btn-active`}`}
+            >
+              {number + 1}
+            </button>
+          ))
+        ) : (
+          <></>
+        )}
+        {/* <select
+          className="select select-info ml-5"
+          onChange={(event) => setSize(event.target.value)}
+        >
+          {/* <option disabled selected>Select language</option> */}
+        {/* <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select> */}{" "}
+      </div>
     </div>
   );
 };

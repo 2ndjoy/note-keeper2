@@ -105,7 +105,7 @@ const Login = () => {
           Forget Password?
         </button>
         <p className="text-amber-900">
-          New to Kather Ghor?{" "}
+          New here?{" "}
           <Link className="text-amber-700" to="/register">
             Create new Account
           </Link>

@@ -6,11 +6,11 @@ import { AuthContext } from "../../UserContext/AuthProvider/AuthProvider";
 import MyNotes from "../MyNotes/MyNotes";
 
 const AddNote = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
   const [extdend, setExtend] = useState(false);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const handleSave = (event) => {
     event.preventDefault();
@@ -62,7 +62,7 @@ const AddNote = () => {
                       onBlur={setTitle}
                       type="text"
                       placeholder={!extdend ? "Take a note" : "Title"}
-                      className="input input-bordered input-accent w-full max-w-xs my-3"
+                      className="input input-bordered border-2 border-red-900 w-full max-w-xs my-3"
                       required
                     />
                   </div>
@@ -72,7 +72,7 @@ const AddNote = () => {
                         onBlur={setNote}
                         type="text"
                         placeholder="Take a note"
-                        className="input input-bordered"
+                        className="input input-bordered border-2 border-red-900"
                         required
                       />
                       <div className="form-control mt-6">
@@ -106,7 +106,7 @@ const AddNote = () => {
         </form>
       </div>
       <div>
-        <MyNotes loading={loading} setLoading={setLoading}></MyNotes>
+        <MyNotes></MyNotes>
       </div>
     </div>
   );
